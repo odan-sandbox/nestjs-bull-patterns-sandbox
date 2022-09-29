@@ -1,5 +1,7 @@
 import { Module, DynamicModule } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
+import { LoggerModule } from 'nestjs-pino';
+
 import {
   QUEUE_NAME as WEBHOOK_QUEUE_NAME,
   WebhookProcessor,
@@ -26,7 +28,7 @@ export class QueueModule {
     return {
       ...queueModule,
       providers: [WebhookProcessor],
-      imports: [queueModule],
+      imports: [queueModule, LoggerModule.forRoot()],
       exports: [queueModule],
     };
   }
