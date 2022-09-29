@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
+import { LoggerModule } from 'nestjs-pino';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { JobModule } from './worker/job.module';
+import { QueueModule } from './worker/queue.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { JobModule } from './worker/job.module';
         port: 6379,
       },
     }),
-    JobModule.registerQueueAsync(),
+    QueueModule.registerQueueAsync(),
+    LoggerModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

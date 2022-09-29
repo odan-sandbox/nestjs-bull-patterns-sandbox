@@ -6,7 +6,7 @@ import {
 } from './processors/webhook.processor';
 
 @Module({})
-export class JobModule {
+export class QueueModule {
   private static createQueueModule(name: string): DynamicModule {
     return BullModule.registerQueueAsync({
       name,
@@ -21,7 +21,7 @@ export class JobModule {
       exports: [queueModule],
     };
   }
-  static registerWorkerAsync(): DynamicModule {
+  static registerProcessorAsync(): DynamicModule {
     const queueModule = this.createQueueModule(WEBHOOK_QUEUE_NAME);
     return {
       ...queueModule,

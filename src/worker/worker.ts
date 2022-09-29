@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
+import { Module } from '@nestjs/common';
+import { QueueModule } from './queue.module';
 
-import { WorkerModule } from './worker.module';
-
-process.on('unhandledRejection', (reason) => {
-  console.error(reason);
-  process.exit(1);
-});
+@Module({
+  imports: [QueueModule.registerProcessorAsync()],
+})
+export class WorkerModule {}
 
 async function bootstrap(): Promise<void> {
   console.log('start worker');
@@ -13,4 +13,10 @@ async function bootstrap(): Promise<void> {
 
   await app.init();
 }
+
 bootstrap();
+
+process.on('unhandledRejection', (reason) => {
+  console.error(reason);
+  process.exit(1);
+});
