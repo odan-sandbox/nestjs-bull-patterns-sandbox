@@ -13,7 +13,7 @@ export class WebhookProcessor extends BaseProcessor {
     @InjectPinoLogger(WebhookProcessor.name)
     private readonly logger: PinoLogger,
   ) {
-    super();
+    super(logger);
   }
 
   async process(job: Job<Payload>): Promise<void> {
